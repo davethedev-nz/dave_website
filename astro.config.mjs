@@ -5,6 +5,6 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://davemiller.example.com',
+  site: 'https://davethedev.co.nz',
   integrations: [tailwind(), sitemap()],
 });

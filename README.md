@@ -1,4 +1,4 @@
-# Dave Miller - Portfolio Website
+# Dave Chapman - Portfolio Website
 
 A professional portfolio site built with Astro, optimized for recruiter conversion and showcasing senior AWS/Python engineering expertise.
 

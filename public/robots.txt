@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://davemiller.example.com/sitemap-index.xml
+Sitemap: https://davethedev.co.nz/sitemap-index.xml
