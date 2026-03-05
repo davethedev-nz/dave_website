@@ -1,0 +1,210 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CaseStudyCard from '../components/CaseStudyCard.astro';
+import DeliverableCard from '../components/DeliverableCard.astro';
+import { getCollection } from 'astro:content';
+
+const allCaseStudies = await getCollection('case-studies');
+const featuredCaseStudies = allCaseStudies
+  .filter(study => study.data.featured)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const techStack = {
+  backend: ['Python', 'FastAPI', 'Django', 'boto3', 'pytest'],
+  cloud: ['AWS Lambda', 'ECS', 'S3', 'DynamoDB', 'Step Functions', 'EventBridge', 'CloudFormation'],
+  data: ['PostgreSQL', 'Redis', 'Aurora', 'Athena', 'Kinesis'],
+  devops: ['Docker', 'Terraform', 'CDK', 'GitHub Actions', 'CloudWatch'],
+};
+---
+
+<BaseLayout 
+  title="Dave Miller – Senior AWS & Python Engineer"
+  description="Contract cloud architect specializing in serverless, data pipelines, and scalable backend systems on AWS. Available for senior roles."
+>
+  <!-- Hero Section -->
+  <section class="max-w-6xl mx-auto px-6 pt-20 pb-24">
+    <div class="max-w-4xl">
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+        Senior AWS & Python Engineer
+        <span class="block text-blue-400 mt-2">Building Scalable Cloud Infrastructure</span>
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-300 mb-12 leading-relaxed max-w-3xl">
+        I design and build production-grade serverless systems, data pipelines, and cloud-native architectures that scale.
+      </p>
+      
+      <div class="flex flex-wrap gap-4 mb-16">
+        <a 
+          href="mailto:dave@example.com"
+          class="px-8 py-4 bg-blue-600 text-white text-lg font-semibold rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center gap-2"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+          Email Me
+        </a>
+        <a 
+          href="/cv.pdf"
+          download
+          class="px-8 py-4 bg-gray-800 text-white text-lg font-semibold rounded-lg hover:bg-gray-700 border border-gray-700 transition-colors inline-flex items-center gap-2"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          Download CV
+        </a>
+      </div>
+      
+      <!-- Tech Strip -->
+      <div class="flex flex-wrap gap-3">
+        {['AWS', 'Python', 'Lambda', 'DynamoDB', 'ECS', 'Terraform', 'FastAPI', 'PostgreSQL'].map((tech) => (
+          <span class="px-4 py-2 bg-gray-800/50 text-gray-300 rounded-md text-sm font-medium border border-gray-700/50">
+            {tech}
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- What I Deliver Section -->
+  <section class="max-w-6xl mx-auto px-6 py-24 border-t border-gray-800">
+    <div class="mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">What I Deliver</h2>
+      <p class="text-xl text-gray-400 max-w-2xl">
+        Proven expertise in cloud architecture, serverless systems, and production-scale infrastructure.
+      </p>
+    </div>
+    
+    <div class="grid md:grid-cols-3 gap-8">
+      <DeliverableCard 
+        icon="cloud"
+        title="Cloud-Native Architecture"
+        description="Serverless-first solutions using AWS Lambda, Step Functions, and EventBridge. Designed for scale, resilience, and cost efficiency."
+      />
+      <DeliverableCard 
+        icon="code"
+        title="Backend & Data Pipelines"
+        description="Production-grade Python services with FastAPI, robust data pipelines processing millions of events, and real-time analytics."
+      />
+      <DeliverableCard 
+        icon="rocket"
+        title="DevOps & Infrastructure as Code"
+        description="Automated deployments with Terraform/CDK, CI/CD pipelines, monitoring, and multi-region disaster recovery strategies."
+      />
+    </div>
+  </section>
+
+  <!-- Selected Case Studies Section -->
+  <section id="case-studies" class="max-w-6xl mx-auto px-6 py-24 border-t border-gray-800">
+    <div class="mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Selected Work</h2>
+      <p class="text-xl text-gray-400 max-w-2xl">
+        Real-world projects demonstrating scalable architecture, cost optimization, and measurable business impact.
+      </p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+      {featuredCaseStudies.map((study) => (
+        <CaseStudyCard 
+          title={study.data.title}
+          description={study.data.description}
+          client={study.data.client}
+          tech={study.data.tech}
+          href={`/case-studies/${study.slug}`}
+        />
+      ))}
+    </div>
+    
+    <div class="text-center">
+      <a 
+        href="/case-studies"
+        class="inline-flex items-center gap-2 px-6 py-3 bg-gray-800 text-white font-semibold rounded-lg hover:bg-gray-700 border border-gray-700 transition-colors"
+      >
+        View All Case Studies
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- Tech Stack Section -->
+  <section class="max-w-6xl mx-auto px-6 py-24 border-t border-gray-800">
+    <div class="mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">Tech Stack</h2>
+      <p class="text-xl text-gray-400 max-w-2xl">
+        Core technologies I use to build reliable, scalable systems.
+      </p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div>
+        <h3 class="text-lg font-semibold text-blue-400 mb-4">Backend</h3>
+        <ul class="space-y-2">
+          {techStack.backend.map((tech) => (
+            <li class="text-gray-300">{tech}</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold text-blue-400 mb-4">AWS Cloud</h3>
+        <ul class="space-y-2">
+          {techStack.cloud.map((tech) => (
+            <li class="text-gray-300">{tech}</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold text-blue-400 mb-4">Data & Storage</h3>
+        <ul class="space-y-2">
+          {techStack.data.map((tech) => (
+            <li class="text-gray-300">{tech}</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold text-blue-400 mb-4">DevOps & IaC</h3>
+        <ul class="space-y-2">
+          {techStack.devops.map((tech) => (
+            <li class="text-gray-300">{tech}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Availability & Contact Section -->
+  <section class="max-w-6xl mx-auto px-6 py-24 border-t border-gray-800">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Let's Work Together</h2>
+      <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+        <strong class="text-white">Available for contract</strong> — Senior AWS/Python roles, 3–6 month engagements.
+        <br />
+        Remote or hybrid (London-based).
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+        <a 
+          href="mailto:dave@example.com"
+          class="px-8 py-4 bg-blue-600 text-white text-lg font-semibold rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center justify-center gap-2"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+          dave@example.com
+        </a>
+        <a 
+          href="https://www.linkedin.com/in/davemiller"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-8 py-4 bg-gray-800 text-white text-lg font-semibold rounded-lg hover:bg-gray-700 border border-gray-700 transition-colors inline-flex items-center justify-center gap-2"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+          </svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

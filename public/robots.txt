@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://davemiller.example.com/sitemap-index.xml
